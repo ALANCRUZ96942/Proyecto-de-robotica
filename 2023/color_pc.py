@@ -6,24 +6,10 @@ import djitellopy as tello
 width = 640
 height = 480
 
-
-
-
-dron  = tello.Tello()
-dron.connect()
-print(dron.get_battery())
- 
-dron.streamoff()
-dron.streamon()
-
-
-
-"""
-
 cap = cv2.VideoCapture(0)
-cap.set(3, frameWidth)
-cap.set(4, frameHeight)
-"""
+cap.set(3, width)
+cap.set(4, height)
+
 
 centro=20
 global imgContour
@@ -50,39 +36,6 @@ cv2.createTrackbar("Area 2","Parameters",250,30000,empty)
 
 frameWidth = width
 frameHeight = height
-
-
-"""
-path = 'resources/p.jpeg'
-img_p = cv2.imread(path)
-
-
-scale_percent = 40 # percent of original size
-width = int(img_p.shape[1] * scale_percent / 100)
-height = int(img_p.shape[0] * scale_percent / 100)
-dim = (width, height)
-
-# resize image
-img = cv2.resize(img_p, dim, interpolation = cv2.INTER_AREA)
-
-"""
-"""
-path = 'resources/p.jpeg'
-img_p = cv2.imread(path)
-
-
-scale_percent = 40 # percent of original size
-width = int(img_p.shape[1] * scale_percent / 100)
-height = int(img_p.shape[0] * scale_percent / 100)
-dim = (width, height)
-
-# resize image
-img = cv2.resize(img_p, dim, interpolation = cv2.INTER_AREA)
-
-"""
-
-
-
 
 def stackImages(scale,imgArray):
     rows = len(imgArray)
@@ -130,12 +83,6 @@ def getContours(img,imgContour):
 
         area = cv2.contourArea(cnt)
         areaMin = cv2.getTrackbarPos("Area 1", "Parameters")
-        
-
-       
-        
-
-
 
         #cv2.drawContours(imgContour, cnt, -1, (255, 0, 255),3)
         peri = cv2.arcLength(cnt, True)
@@ -223,22 +170,13 @@ def display(img):
 
 while True:
 
-    """
+   
     _, img = cap.read()
     imgContour = img.copy()
     imgHsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
-    """
-    
-    frame_read = dron.get_frame_read()
-    myFrame = frame_read.frame
-    img = cv2.resize(myFrame, (width, height))
-    imgContour = img.copy()
-    imgHsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-
 
     imgContour = img.copy()
     imgHsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
-
 
     h_min = cv2.getTrackbarPos("HUE Min","HSV")
     h_max = cv2.getTrackbarPos("HUE Max", "HSV")
@@ -271,7 +209,7 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-#cap.release()
+cap.release()
 cv2.destroyAllWindows()
 
 
